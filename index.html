@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peace Protocol - Maee</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #0f0f14;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .header-text {
+            font-size: 1.8rem;
+            color: #ff1e42;
+            margin: 15px 0;
+            font-weight: 600;
+            text-align: center;
+        }
+        /* Python Code Display Box galing sa original site */
+        .code-box {
+            background: #14141c;
+            border: 1px solid #2d2d3d;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 650px;
+            max-height: 220px;
+            overflow-y: auto;
+            padding: 15px;
+            margin-bottom: 15px;
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: #a9b7c6;
+            text-align: left;
+            white-space: pre;
+        }
+        .terminal-box {
+            background: #14141c;
+            border: 1px solid #ff1e42;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 650px;
+            padding: 12px;
+            margin-bottom: 15px;
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: #a9b7c6;
+            box-shadow: 0 4px 20px rgba(255, 30, 66, 0.15);
+        }
+        .terminal-header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #2d2d3d;
+            padding-bottom: 6px;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+        /* Katuglong na box sa ilalim para sa You'll be safe here na nag-fade out pagtapos ng timestamp */
+        .safe-attached-box {
+            background: #14141c;
+            border: 1px solid #ff1e42;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 650px;
+            padding: 15px;
+            margin-top: -5px;
+            margin-bottom: 15px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(-5px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            pointer-events: none;
+            display: none;
+        }
+        .safe-attached-box.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .safe-attached-box span {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255, 30, 66, 0.8);
+        }
+        .btn-play {
+            background-color: #ff1e42;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            box-shadow: 0 4px 12px rgba(255, 30, 66, 0.3);
+            margin: 15px 0 30px 0;
+        }
+        .btn-play:hover {
+            background-color: #e01538;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-text">Sorry na, Maee 🥺</div>
+
+    <!-- Python Script Viewer Box -->
+    <div class="code-box">import sys
+import time
+import random
+import os
+import math
+from datetime import datetime
+from PyQt5 import QtWidgets, QtCore, QtGui
+
+# ==========================================
+# PROJECT: Emotional Recovery & Audio Sync
+# TARGET: Maee (Peace Protocol v2.5)
+# ==========================================
+
+class SystemBootloader(QtCore.QObject):
+    progress_updated = QtCore.pyqtSignal(int)
+    
+    def __init__(self):
+        super().__init__()
+        self.status = "Initializing core modules..."
+        self.latency = 0.014
+        
+    def execute_sequence(self):
+        for i in range(1, 101):
+            time.sleep(self.latency)
+            self.progress_updated.emit(i)
+        print("[OK] Bootloader sequence completed successfully.")
+
+class MatrixGrid(QtWidgets.QWidget):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.grid_size = 32
+        self.nodes = []
+        self.initialize_matrix()
+
+    def initialize_matrix(self):
+        for x in range(self.grid_size):
+            row = []
+            for y in range(self.grid_size):
+                node_val = random.choice([0, 1])
+                row.append(node_val)
+            self.nodes.append(row)
+
+    def render_grid(self, painter):
+        pen = QtGui.QPen(QtGui.QColor(255, 30, 66, 45))
+        painter.setPen(pen)
+        for x in range(self.grid_size):
+            for y in range(self.grid_size):
+                if self.nodes[x][y] == 1:
+                    painter.drawPoint(x * 10, y * 10)
+
+class DarkCard(QtWidgets.QWidget):
+    def __init__(self, parent, text, x, y):
+        super().__init__(parent)
+        self.setGeometry(x, y, 320, 65)
+        self.setStyleSheet("background: #0f0f14; border: 1px solid #ff1e42; color: #ffffff;")
+        self.opacity_val = 0.0
+        
+    def fadeIn(self):
+        self.opacity_val = min(1.0, self.opacity_val + 0.1)
+        self.update()
+
+class AudioVisualizer(QtCore.QThread):
+    frequency_signal = QtCore.pyqtSignal(list)
+    
+    def __init__(self):
+        super().__init__()
+        self.active = True
+
+    def run(self):
+        while self.active:
+            spectrum = [random.uniform(20.0, 20000.0) for _ in range(16)]
+            self.frequency_signal.emit(spectrum)
+            self.msleep(50)
+
+class CoreEngine:
+    def __init__(self, target_name):
+        self.target = target_name
+        self.version = "v2.5.4-stable"
+        self.timestamp = datetime.now()
+        
+    def compile_assets(self):
+        print(f"[{self.timestamp}] Compiling UI shaders...")
+        print(f"[{self.timestamp}] Linking secure audio buffers...")
+        print(f"[{self.timestamp}] Target locked: {self.target}")
+        return True
+
+def run_diagnostics():
+    metrics = {"CPU": 12.4, "RAM": 42.1, "GPU": 68.9}
+    for key, val in metrics.items():
+        print(f"Diagnostic check [{key}]: {val}% - Status OK")
+
+def main():
+    app = QtWidgets.QApplication(sys.argv)
+    engine = CoreEngine("Maee")
+    engine.compile_assets()
+    run_diagnostics()
+    
+    bootloader = SystemBootloader()
+    bootloader.execute_sequence()
+    
+    window = QtWidgets.QMainWindow()
+    window.setWindowTitle("Peace Protocol - Active")
+    window.resize(1280, 720)
+    
+    grid = MatrixGrid(window)
+    grid.show()
+    
+    print("System running smoothly. Waiting for user interaction...")
+    sys.exit(app.exec_())
+
+if __name__ == "__main__":
+    main()</div>
+
+    <!-- Terminal Box -->
+    <div class="terminal-box">
+        <div class="terminal-header">
+            <span>Terminal ~ python3 audio_lyrics.py</span>
+            <span>🟢 Active</span>
+        </div>
+        <div>[OK] Bootloader sequence completed successfully.</div>
+        <div>[OK] Target locked: Maee (Peace Protocol v2.5)</div>
+        <div>Status: Waiting for user interaction...</div>
+    </div>
+
+    <!-- Katuglong na box sa ilalim para sa dalawang You'll be safe here na nag-fade out pagtapos ng timestamp -->
+    <div class="safe-attached-box" id="safeAttachedBox">
+        <span>You'll be safe here</span>
+    </div>
+
+    <button class="btn-play" onclick="playAudio()">Play Music 🎵</button>
+
+    <audio id="bgAudio" loop src="song.mp3"></audio>
+
+    <script>
+        const audio = document.getElementById("bgAudio");
+        const safeAttachedBox = document.getElementById("safeAttachedBox");
+
+        function playAudio() {
+            audio.play().then(() => {
+                document.querySelector('.btn-play').style.display = 'none';
+            }).catch(error => {
+                console.log("Audio play failed:", error);
+            });
+        }
+
+        audio.addEventListener("timeupdate", () => {
+            let currentTime = audio.currentTime;
+            
+            // Eksaktong timestamp ranges para sa dalawang "You'll be safe here"
+            let isSafeHereTime = (currentTime >= 11.672 && currentTime <= 15.41) || (currentTime >= 24.45 && currentTime <= 30.15);
+            
+            if (isSafeHereTime) {
+                safeAttachedBox.classList.add("show");
+            } else {
+                safeAttachedBox.classList.remove("show");
+            }
+        });
+    </script>
+</body>
+</html>
