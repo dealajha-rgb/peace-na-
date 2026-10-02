@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peace Protocol - Maee</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #0f0f14;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .header-text {
+            font-size: 1.8rem;
+            color: #ff1e42;
+            margin: 15px 0;
+            font-weight: 600;
+            text-align: center;
+        }
+        /* Buong Python Code Viewer Box */
+        .code-box {
+            background: #14141c;
+            border: 1px solid #2d2d3d;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 650px;
+            max-height: 250px;
+            overflow-y: auto;
+            padding: 15px;
+            margin-bottom: 15px;
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: #a9b7c6;
+            text-align: left;
+            white-space: pre;
+        }
+        .terminal-box {
+            background: #14141c;
+            border: 1px solid #ff1e42;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 650px;
+            padding: 12px;
+            margin-bottom: 15px;
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: #a9b7c6;
+            box-shadow: 0 4px 20px rgba(255, 30, 66, 0.15);
+        }
+        .terminal-header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #2d2d3d;
+            padding-bottom: 6px;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+        .lyrics-container {
+            text-align: center;
+            margin: 15px 0;
+            max-width: 650px;
+            padding: 0 15px;
+        }
+        .lyrics-line {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s ease-in-out;
+            margin: 10px 0;
+            opacity: 0.4;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+        .lyrics-line.active {
+            color: #ffffff;
+            opacity: 1;
+            transform: scale(1.05);
+            text-shadow: 0 0 14px rgba(255, 30, 66, 0.7);
+        }
+        .btn-play {
+            background-color: #ff1e42;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            box-shadow: 0 4px 12px rgba(255, 30, 66, 0.3);
+            margin: 15px 0 30px 0;
+        }
+        .btn-play:hover {
+            background-color: #e01538;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-text">Sorry na, Maee 🥺</div>
+
+    <!-- Buong Original Python Script Code Display -->
+    <div class="code-box">import sys
+import time
+import random
+import os
+import math
+from datetime import datetime
+from PyQt5 import QtWidgets, QtCore, QtGui
+
+# ==========================================
+# PROJECT: Emotional Recovery & Audio Sync
+# TARGET: Maee (Peace Protocol v2.5)
+# ==========================================
+
+class SystemBootloader(QtCore.QObject):
+    progress_updated = QtCore.pyqtSignal(int)
+    
+    def __init__(self):
+        super().__init__()
+        self.status = "Initializing core modules..."
+        self.latency = 0.014
+        
+    def execute_sequence(self):
+        for i in range(1, 101):
+            time.sleep(self.latency)
+            self.progress_updated.emit(i)
+        print("[OK] Bootloader sequence completed successfully.")
+
+class MatrixGrid(QtWidgets.QWidget):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.grid_size = 32
+        self.nodes = []
+        self.initialize_matrix()
+
+    def initialize_matrix(self):
+        for x in range(self.grid_size):
+            row = []
+            for y in range(self.grid_size):
+                node_val = random.choice([0, 1])
+                row.append(node_val)
+            self.nodes.append(row)
+
+    def render_grid(self, painter):
+        pen = QtGui.QPen(QtGui.QColor(255, 30, 66, 45))
+        painter.setPen(pen)
+        for x in range(self.grid_size):
+            for y in range(self.grid_size):
+                if self.nodes[x][y] == 1:
+                    painter.drawPoint(x * 10, y * 10)
+
+class DarkCard(QtWidgets.QWidget):
+    def __init__(self, parent, text, x, y):
+        super().__init__(parent)
+        self.setGeometry(x, y, 320, 65)
+        self.setStyleSheet("background: #0f0f14; border: 1px solid #ff1e42; color: #ffffff;")
+        self.opacity_val = 0.0
+        
+    def fadeIn(self):
+        self.opacity_val = min(1.0, self.opacity_val + 0.1)
+        self.update()
+
+class AudioVisualizer(QtCore.QThread):
+    frequency_signal = QtCore.pyqtSignal(list)
+    
+    def __init__(self):
+        super().__init__()
+        self.active = True
+
+    def run(self):
+        while self.active:
+            spectrum = [random.uniform(20.0, 20000.0) for _ in range(16)]
+            self.frequency_signal.emit(spectrum)
+            self.msleep(50)
+
+class CoreEngine:
+    def __init__(self, target_name):
+        self.target = target_name
+        self.version = "v2.5.4-stable"
+        self.timestamp = datetime.now()
+        
+    def compile_assets(self):
+        print(f"[{self.timestamp}] Compiling UI shaders...")
+        print(f"[{self.timestamp}] Linking secure audio buffers...")
+        print(f"[{self.timestamp}] Target locked: {self.target}")
+        return True
+
+def run_diagnostics():
+    metrics = {"CPU": 12.4, "RAM": 42.1, "GPU": 68.9}
+    for key, val in metrics.items():
+        print(f"Diagnostic check [{key}]: {val}% - Status OK")
+
+def main():
+    app = QtWidgets.QApplication(sys.argv)
+    engine = CoreEngine("Maee")
+    engine.compile_assets()
+    run_diagnostics()
+    
+    bootloader = SystemBootloader()
+    bootloader.execute_sequence()
+    
+    window = QtWidgets.QMainWindow()
+    window.setWindowTitle("Peace Protocol - Active")
+    window.resize(1280, 720)
+    
+    grid = MatrixGrid(window)
+    grid.show()
+    
+    print("System running smoothly. Waiting for user interaction...")
+    sys.exit(app.exec_())
+
+if __name__ == "__main__":
+    main()</div>
+
+    <!-- Terminal Box -->
+    <div class="terminal-box">
+        <div class="terminal-header">
+            <span>Terminal ~ python3 audio_lyrics.py</span>
+            <span>🟢 Active</span>
+        </div>
+        <div>[OK] Bootloader sequence completed successfully.</div>
+        <div>[OK] Target locked: Maee (Peace Protocol v2.5)</div>
+        <div>Status: Waiting for user interaction...</div>
+    </div>
+
+    <!-- Lyrics with Timestamps & Safe Wrapping -->
+    <div class="lyrics-container" id="lyricsDisplay">
+        <div class="lyrics-line" id="line-0">When the light disappears</div>
+        <div class="lyrics-line" id="line-1">And when this world's insincere, you'll be safe here</div>
+        <div class="lyrics-line" id="line-2">When nobody hears you scream</div>
+        <div class="lyrics-line" id="line-3">And I'll scream with you, you'll be safe here</div>
+    </div>
+
+    <button class="btn-play" onclick="playAudio()">Play Music 🎵</button>
+
+    <audio id="bgAudio" src="song.mp3"></audio>
+
+    <script>
+        const timestamps = [
+          {word: "When", start: 0, end: 0.5, line_index: 0},
+          {word: "the", start: 0.5, end: 0.841, line_index: 0},
+          {word: "light", start: 0.841, end: 2.74, line_index: 0},
+          {word: "disappears", start: 2.74, end: 5.73, line_index: 0},
+          {word: "And", start: 6.07, end: 6.504, line_index: 1},
+          {word: "when", start: 6.504, end: 6.904, line_index: 1},
+          {word: "this", start: 6.904, end: 7.328, line_index: 1},
+          {word: "world's", start: 7.328, end: 9.24, line_index: 1},
+          {word: "insincere", start: 9.53, end: 11.672, line_index: 1},
+          {word: "you'll", start: 11.672, end: 12.152, line_index: 1},
+          {word: "be", start: 12.152, end: 12.664, line_index: 1},
+          {word: "safe", start: 12.664, end: 13.38, line_index: 1},
+          {word: "here", start: 13.38, end: 15.41, line_index: 1},
+          {word: "When", start: 15.65, end: 16.09, line_index: 2},
+          {word: "nobody", start: 16.09, end: 17.9, line_index: 2},
+          {word: "hears", start: 18.889, end: 19.36, line_index: 2},
+          {word: "you", start: 19.36, end: 19.58, line_index: 2},
+          {word: "scream", start: 19.58, end: 21.95, line_index: 2},
+          {word: "And", start: 21.95, end: 22.436, line_index: 3},
+          {word: "I'll", start: 22.436, end: 22.792, line_index: 3},
+          {word: "scream", start: 22.792, end: 23.316, line_index: 3},
+          {word: "with", start: 23.316, end: 23.672, line_index: 3},
+          {word: "you", start: 23.672, end: 24.36, line_index: 3},
+          {word: "you'll", start: 24.45, end: 24.916, line_index: 3},
+          {word: "be", start: 24.916, end: 25.39, line_index: 3},
+          {word: "safe", start: 25.39, end: 26.24, line_index: 3},
+          {word: "here", start: 26.24, end: 30.15, line_index: 3}
+        ];
+
+        const audio = document.getElementById("bgAudio");
+
+        function playAudio() {
+            audio.play().then(() => {
+                document.querySelector('.btn-play').style.display = 'none';
+            }).catch(error => {
+                console.log("Audio play failed:", error);
+            });
+        }
+
+        audio.addEventListener("timeupdate", () => {
+            let currentTime = audio.currentTime;
+            let activeLineIndex = -1;
+            for (let item of timestamps) {
+                if (currentTime >= item.start && currentTime <= item.end) {
+                    activeLineIndex = item.line_index;
+                    break;
+                }
+            }
+
+            for (let i = 0; i <= 3; i++) {
+                let lineEl = document.getElementById(`line-${i}`);
+                if (i === activeLineIndex) {
+                    lineEl.classList.add("active");
+                } else {
+                    lineEl.classList.remove("active");
+                }
+            }
+        });
+    </script>
+</body>
+</html>
